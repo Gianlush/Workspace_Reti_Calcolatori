@@ -6,7 +6,7 @@ import java.net.*;
 import java.util.Random;
 
 public class Broker {
-    private static Server[] servers = {new Server("localhost",4000),new Server("localhost",4001)};
+    private static Server[] servers = {new Server("localhost",4000)};
     private static int tcpPort=2000;
 
     private static class RequestHandler extends Thread {

@@ -21,6 +21,7 @@ public class Client {
             Richiesta richiesta = new Richiesta(localAddress,localPort,A,B);
             ObjectOutputStream outputStream = new ObjectOutputStream(inviaRichiesta.getOutputStream());
             outputStream.writeObject(richiesta);
+            System.out.println("Il client ha inviato la richiesta: "+A+"+"+B+"=?");
 
             //ricevo risposta dal server
             ServerSocket serverSocket = new ServerSocket(localPort);

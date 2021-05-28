@@ -1,6 +1,8 @@
 package traccia_26_02_2015.esercizio1;
 
-public class Richiesta {
+import java.io.Serializable;
+
+public class Richiesta implements Serializable {
     private String hostname;
     private int port;
     private int A,B;

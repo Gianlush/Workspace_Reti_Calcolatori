@@ -1,6 +1,8 @@
 package traccia_26_02_2015.esercizio1;
 
-public class Risposta {
+import java.io.Serializable;
+
+public class Risposta implements Serializable {
     private int num;
 
     public Risposta(int num){

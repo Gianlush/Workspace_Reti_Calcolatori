@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 
 public class Server {
     private static String hostname;
-    private static int udpPort;
+    private static int udpPort=4000;
 
     public Server(String hostname, int UDPport){
         this.hostname=hostname;
@@ -31,22 +31,24 @@ public class Server {
             byte[] buff = new byte[64];
             DatagramSocket serverSocket = new DatagramSocket(udpPort);
             DatagramPacket datagramPacket = new DatagramPacket(buff,buff.length);
-            serverSocket.receive(datagramPacket);
-            System.out.println("Il server con porta "+udpPort+" ha ricevuto una richiesta.");
+            while(true) {
+                serverSocket.receive(datagramPacket);
+                System.out.println("Il server con porta " + udpPort + " ha ricevuto una richiesta.");
 
-            //costruisci risposta
-            String richiesta = new String(buff);
-            StringTokenizer stringTokenizer = new StringTokenizer(richiesta,"-");
-            String clientAddress = stringTokenizer.nextToken();
-            int clientPort = Integer.parseInt(stringTokenizer.nextToken());
-            int A = Integer.parseInt(stringTokenizer.nextToken());
-            int B = Integer.parseInt(stringTokenizer.nextToken());
-            Risposta risposta = new Risposta(A+B);
+                //costruisci risposta
+                String richiesta = new String(buff).trim();
+                StringTokenizer stringTokenizer = new StringTokenizer(richiesta, "-");
+                String clientAddress = stringTokenizer.nextToken();
+                int clientPort = Integer.parseInt(stringTokenizer.nextToken());
+                int A = Integer.parseInt(stringTokenizer.nextToken());
+                int B = Integer.parseInt(stringTokenizer.nextToken());
+                Risposta risposta = new Risposta(A + B);
 
-            //invio risposta
-            Socket invioRisposta = new Socket(clientAddress,clientPort);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(invioRisposta.getOutputStream());
-            objectOutputStream.writeObject(risposta);
+                //invio risposta
+                Socket invioRisposta = new Socket(clientAddress, clientPort);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(invioRisposta.getOutputStream());
+                objectOutputStream.writeObject(risposta);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
