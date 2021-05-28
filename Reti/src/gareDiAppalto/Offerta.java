@@ -1,6 +1,8 @@
 package gareDiAppalto;
 
-public class Offerta {
+import java.io.Serializable;
+
+public class Offerta implements Serializable {
     private int id;
     private double importo;
 
