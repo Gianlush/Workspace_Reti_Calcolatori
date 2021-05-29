@@ -1,4 +1,4 @@
-package traccia_26_02_2015.esercizio1;
+package traccia_26_02_2015.esercizio2;
 
 import java.io.Serializable;
 

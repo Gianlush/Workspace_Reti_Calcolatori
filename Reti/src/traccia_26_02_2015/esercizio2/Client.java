@@ -1,11 +1,10 @@
-package traccia_26_02_2015.esercizio1;
+package traccia_26_02_2015.esercizio2;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Client {
     private static int brokerPort = 2000;

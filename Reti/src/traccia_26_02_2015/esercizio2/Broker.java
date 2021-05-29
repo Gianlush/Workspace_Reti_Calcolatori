@@ -1,9 +1,8 @@
-package traccia_26_02_2015.esercizio1;
+package traccia_26_02_2015.esercizio2;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.*;
-import java.util.Random;
 
 public class Broker {
     private static Server[] servers = {new Server("localhost",4000)};

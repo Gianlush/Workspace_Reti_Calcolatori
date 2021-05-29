@@ -1,11 +1,10 @@
-package traccia_26_02_2015.esercizio1;
+package traccia_26_02_2015.esercizio2;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.StringTokenizer;
 
 public class Server {
