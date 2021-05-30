@@ -40,11 +40,11 @@ public class Server {
 
                     if(!scadenze.get(prodotto)) {
                         objectOutputStream.writeObject("SCADUTO");
-                        continue;
+                        break;
                     }
                     else if(offerta.getCifraOfferta()<prodotto.getPrezzoMinimo()) {
                         objectOutputStream.writeObject("TROPPO BASSA");
-                        continue;
+                        break;
                     }
 
 
@@ -77,20 +77,23 @@ public class Server {
                 sleep(prodotto.getDurata());
                 System.out.println("Il prodotto "+prodotto.getId()+" è scaduto.");
                 scadenze.put(prodotto,false);
+
+                DatagramSocket datagramSocket = new DatagramSocket();
                 if(vincitori.containsKey(prodotto)) {
-                    DatagramSocket datagramSocket = new DatagramSocket();
                     byte[] vinci = ("VINCITORE_" + prodotto.getId()).getBytes();
                     DatagramPacket datagramPacket = new DatagramPacket(vinci, vinci.length, vincitori.get(prodotto), udpPort);
                     datagramSocket.send(datagramPacket);
-
+                }
+                if(clientiPerdenti.containsKey(prodotto)){
                     byte[] perdi = ("NON_VINCITORE_" + prodotto.getId()).getBytes();
-                    datagramPacket = new DatagramPacket(perdi, perdi.length, null, udpPort);
+                    DatagramPacket datagramPacket = new DatagramPacket(perdi, perdi.length, null, udpPort);
                     for (InetAddress i : clientiPerdenti.get(prodotto)) {
                         datagramPacket.setAddress(i);
                         datagramSocket.send(datagramPacket);
                     }
                 }
-                else System.out.println("Nessuno ha fatto offerte per il prodotto: "+prodotto.getId());
+                else
+                    System.out.println("Nessuno ha fatto offerte per il prodotto: "+prodotto.getId());
 
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();

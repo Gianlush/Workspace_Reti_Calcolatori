@@ -42,6 +42,8 @@ public class Client extends Thread implements Serializable {
             String msg = (String) objectInputStream.readObject();
             System.out.println("Il cliente "+id+" ha ricevuto la risposta: "+msg);
 
+            if(msg.trim().equals("SCADUTO") || msg.trim().equals("TROPPO BASSA"))
+                return;
             DatagramSocket datagramSocket = new DatagramSocket(4000,address);
             byte[] buff = new byte[64];
             DatagramPacket datagramPacket = new DatagramPacket(buff,buff.length);
