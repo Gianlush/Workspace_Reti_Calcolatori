@@ -1,7 +1,5 @@
 package traccia_15_02_20;
 
-import traccia_11_11_20.esercizio2.Server;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,13 +14,13 @@ public class Gestore {
 
     private static class RequestHandler extends Thread {
 
-        private ServerSocket serverClientSocket;
+        private Socket client;
         private ServerSocket serverCentroBSocket;
         private MulticastSocket multicastSocket;
         private InetAddress mCastGroup;
 
-        public RequestHandler(ServerSocket socket, MulticastSocket multicastSocket, InetAddress address, ServerSocket serverCentroBSocket){
-            this.serverClientSocket =socket;
+        public RequestHandler(Socket socket, MulticastSocket multicastSocket, InetAddress address, ServerSocket serverCentroBSocket){
+            this.client =socket;
             this.mCastGroup=address;
             this.multicastSocket=multicastSocket;
             this.serverCentroBSocket=serverCentroBSocket;
@@ -32,8 +30,7 @@ public class Gestore {
             try{
                 while(true){
 
-                    Socket clientSocket = serverClientSocket.accept();
-                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+                    ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
                     String richiesta = (String) objectInputStream.readObject();
                     System.out.println("Un client ha inviato la richiesta: "+richiesta);
 
@@ -61,7 +58,7 @@ public class Gestore {
                     System.out.println("terminata ricezione offerte");
 
 
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
                     objectOutputStream.writeObject(offerte.toString());
 
                 }
@@ -75,12 +72,17 @@ public class Gestore {
     }
     public static void avvia(){
         try {
-            ServerSocket serverClientSocket = new ServerSocket(tcpClientPort);
+            InetAddress mCastGroup = InetAddress.getByName(mCastAddress);
             ServerSocket serverCentroSocket = new ServerSocket(tcpCentroBPort);
             MulticastSocket multicastSocket = new MulticastSocket();
-            InetAddress mCastGroup = InetAddress.getByName(mCastAddress);
+            ServerSocket serverClientSocket = new ServerSocket(tcpClientPort);
+            while(true) {
+                Socket client = serverClientSocket.accept();
+                new RequestHandler(client,multicastSocket,mCastGroup,serverCentroSocket).start();
 
-            new RequestHandler(serverClientSocket,multicastSocket,mCastGroup,serverCentroSocket).start();
+            }
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
