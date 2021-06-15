@@ -1,6 +1,4 @@
-package traccia_15_02_20;
-
-import traccia_20_01_2021_incompleta.esercizio1.Data;
+package traccia_15_01_20;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

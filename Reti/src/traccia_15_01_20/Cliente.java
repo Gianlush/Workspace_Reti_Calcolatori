@@ -1,14 +1,9 @@
-package traccia_15_02_20;
-
-import traccia_11_11_20.esercizio2.Client;
-import traccia_11_11_20.esercizio2.Server;
+package traccia_15_01_20;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Cliente extends Thread {
 
