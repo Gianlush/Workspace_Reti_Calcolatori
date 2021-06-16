@@ -55,6 +55,7 @@ public class Server {
                     oos.writeObject("service not available");
                     return;
                 }
+
                 esame.addInCoda();
                 while(esami.get(esameId).getnPrenotati()==20){
                     //attesa finche scade il socket Timeout
