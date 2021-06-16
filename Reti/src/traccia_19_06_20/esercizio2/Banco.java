@@ -4,13 +4,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.*;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class Banco {
 
-    private static List<Biglietto> bigliettiVenduti = Collections.synchronizedList(new ArrayList<>());
+    private static ArrayList<Biglietto> bigliettiVenduti = new ArrayList<>();
     private static HashMap<String,Lotteria> lotterie = new HashMap<>();
 
     public static void avvia(){
